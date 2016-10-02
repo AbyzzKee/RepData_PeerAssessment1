@@ -22,9 +22,9 @@ meanStep = mean(totalStep$steps)
 medianStep = median(totalStep$steps)
 
 library(ggplot2)
-ggplot(totalStep, aes(date,steps))+
+ggplot(totalStep, aes(steps))+
   labs(title = "Total number of steps taken per day") +
-  geom_bar(stat = "identity")
+  geom_histogram(bins = 5)
 ```
 
 2. Calculate and report the mean and median total number of steps taken per day  
@@ -90,17 +90,20 @@ these values differ from the estimates from the first part of the assignment?
 What is the impact of imputing missing data on the estimates of the total
 daily number of steps?  
 ```{r}
-totalStep = aggregate(steps ~ date, fillActivity, sum)
-meanStep = mean(totalStep$steps)
-medianStep = median(totalStep$steps)
+fillTotalStep = aggregate(steps ~ date, fillActivity, sum)
+fillMeanStep = mean(fillTotalStep$steps)
+fillMedianStep = median(fillTotalStep$steps)
 
 library(ggplot2)
-ggplot(totalStep, aes(date,steps))+
-  labs(title = "Total number of steps taken per day") +
-  geom_bar(stat = "identity")
+ggplot(fillTotalStep, aes(steps))+
+  labs(title = "Total number of steps taken per day (imputed)") +
+  geom_histogram(bins = 5)
 ```
   
-> Imputing missing data causing more data fall on the mean value.     
+> **mean**   total number of steps taken per day: **`r as.character(fillMeanStep)`**  
+> **median** total number of steps taken per day: **`r as.character(fillMedianStep)`**  
+
+> With filling strategy: mean for that 5-minute interval, new mean and median is equal to original mean value.     
   
   
 ## Are there differences in activity patterns between weekdays and weekends?
